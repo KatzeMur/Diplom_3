@@ -5,3 +5,6 @@ __pycache__/
 .idea/
 allure_results/
 .venv/
+chromedriver/
+*.zip
+download_driver.py

@@ -1,62 +1,52 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from locators.locators import INGREDIENT, MODAL_TITLE, MODAL_CLOSE
-from data.constants import BASE_URL
+from locators.locators import (
+    INGREDIENT, 
+    MODAL_TITLE, 
+    MODAL_CLOSE,
+    HEADER_CONSTRUCTOR_LINK,
+    HEADER_FEED_LINK
+)
+from pages.base_page import BasePage
 
 
-class MainPage:
-    """Page Object для главной страницы"""
-    
+class MainPage(BasePage):
+
     def __init__(self, driver):
-        self.driver = driver
-        self.url = BASE_URL
-    
-    constructor_link = (By.XPATH, "//a[@href='/']")
-    feed_link = (By.XPATH, "//a[@href='/feed']")
-    ingredient = (By.XPATH, INGREDIENT)
-    modal_title = (By.XPATH, MODAL_TITLE)
-    modal_close = (By.XPATH, MODAL_CLOSE)
-    counter = (By.XPATH, "//p[contains(@class, 'counter_counter__num')]")
-    order_basket = (By.XPATH, "//*[contains(@class, 'BurgerConstructor')]")
-    order_button = (By.XPATH, "//button[text()='Оформить заказ']")
-    
-    def open(self):
-        self.driver.get(self.url)
-    
+        super().__init__(driver)
+        self.url = "/"
+
     def click_constructor(self):
-        self.driver.find_element(*self.constructor_link).click()
-    
+        self.click_element((By.XPATH, HEADER_CONSTRUCTOR_LINK))
+
     def click_feed(self):
-        self.driver.find_element(*self.feed_link).click()
-    
+        self.click_element((By.XPATH, HEADER_FEED_LINK))
+
     def click_ingredient(self):
-        self.driver.find_element(*self.ingredient).click()
-    
+        self.click_element((By.XPATH, INGREDIENT))
+
     def get_modal_title(self):
-        return self.driver.find_element(*self.modal_title).text
-    
+        return self.get_text((By.XPATH, MODAL_TITLE))
+
     def close_modal(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.modal_close)
-        )
-        self.driver.find_element(*self.modal_close).click()
-    
+        self.click_element((By.XPATH, MODAL_CLOSE))
+
     def is_modal_closed(self):
         try:
-            WebDriverWait(self.driver, 5).until(
-                EC.invisibility_of_element_located(self.modal_title)
+            WebDriverWait(self.driver, 10).until(
+                EC.invisibility_of_element_located((By.XPATH, MODAL_TITLE))
             )
             return True
-        except:
+        except Exception:
             return False
-    
+
     def get_counter_value(self):
-        return self.driver.find_element(*self.counter).text
-    
+        return self.get_text((By.XPATH, "//p[contains(@class, 'counter_counter__num')]"))
+
     def drag_ingredient_to_basket(self):
-        ingredient_element = self.driver.find_element(*self.ingredient)
-        basket_element = self.driver.find_element(*self.order_basket)
+        ingredient_el = self.find_element((By.XPATH, INGREDIENT))
+        basket_el = self.find_element((By.XPATH, "//*[contains(@class, 'BurgerConstructor')]"))
 
         script = """
             function createDragEvent(type, target, dataTransfer) {
@@ -67,25 +57,18 @@ class MainPage:
                 });
                 target.dispatchEvent(event);
             }
-
             var source = arguments[0];
             var target = arguments[1];
-
             var dataTransfer = new DataTransfer();
             dataTransfer.setData('text/plain', source.id || source.textContent);
-
             createDragEvent('dragstart', source, dataTransfer);
             createDragEvent('dragover', target, dataTransfer);
             target.focus();
             createDragEvent('drop', target, dataTransfer);
             createDragEvent('dragend', source, dataTransfer);
         """
-        self.driver.execute_script(script, ingredient_element, basket_element)
-    
+        self.execute_script(script, ingredient_el, basket_el)
+
     def click_order_button(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.order_button)
-        )
-        element = self.driver.find_element(*self.order_button)
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_element((By.XPATH, "//button[text()='Оформить заказ']"))
         
