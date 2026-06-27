@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.vscode/
+.idea/
+allure_results/
+.venv/
+chromedriver/
+*.zip
+download_driver.py
