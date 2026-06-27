@@ -1,7 +1,5 @@
-from selenium.webdriver.common.by import By
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
-from locators.locators import MODAL_TITLE
 from data.user_data import LOGIN_EMAIL, LOGIN_PASSWORD
 
 
@@ -12,19 +10,19 @@ class TestMain:
         main_page.open()
         main_page.click_feed()
         main_page.click_constructor()
-        assert driver.current_url.endswith("/")
+        assert main_page.is_on_constructor_page() is True
 
     def test_click_feed(self, driver):
         main_page = MainPage(driver)
         main_page.open()
         main_page.click_feed()
-        assert "/feed" in driver.current_url
+        assert main_page.is_on_feed_page() is True
 
     def test_ingredient_modal_opens(self, driver):
         main_page = MainPage(driver)
         main_page.open()
         main_page.click_ingredient()
-        assert main_page.is_element_displayed((By.XPATH, MODAL_TITLE)) is True
+        assert main_page.is_modal_opened() is True
 
     def test_ingredient_modal_closes(self, driver):
         main_page = MainPage(driver)

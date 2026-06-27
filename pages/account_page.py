@@ -1,6 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import (
     ACCOUNT_LINK,
     ORDER_HISTORY_LINK,
@@ -19,12 +17,19 @@ class AccountPage(BasePage):
         self.scroll_to_element((By.XPATH, ACCOUNT_LINK))
         self.click_element((By.XPATH, ACCOUNT_LINK))
 
+    def is_on_account_page(self):
+        return "/account" in self.get_current_url()
+
+    def is_on_order_history_page(self):
+        return "/account/order-history" in self.get_current_url()
+
     def click_logout(self):
         self.close_modal_if_present()
         self.click_element((By.XPATH, LOGOUT_BUTTON))
-        WebDriverWait(self.driver, 10).until(
-            EC.url_contains("/login")
-        )
+        self.wait_for_url_contains("/login")
+
+    def is_on_login_page(self):
+        return "/login" in self.get_current_url()
 
     def click_order_history(self):
         self.click_element((By.XPATH, ORDER_HISTORY_LINK))

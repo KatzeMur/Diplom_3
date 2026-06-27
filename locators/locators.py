@@ -7,6 +7,7 @@ RECOVERY_BUTTON = "//button[text()='Восстановить']"
 PASSWORD_TOGGLE_BUTTON = "//div[contains(@class, 'input__icon-action')]"
 PASSWORD_INPUT = "//label[text()='Пароль']/following-sibling::input"
 LOGIN_BUTTON = "//button[text()='Войти']"
+BURGER_CONSTRUCTOR = "//*[contains(@class, 'BurgerConstructor')]"
 
 # Локаторы для личного кабинета
 ACCOUNT_LINK = "//a[contains(., 'Личный Кабинет')]"
@@ -17,6 +18,8 @@ LOGOUT_BUTTON = "//button[text()='Выход']"
 INGREDIENT = "//a[starts-with(@href, '/ingredient/')]"
 MODAL_TITLE = "//h2[text()='Детали ингредиента']"
 MODAL_CLOSE = "//div[contains(@class, 'Modal_modal')]//button[@type='button']"
+COUNTER = "//p[contains(@class, 'counter_counter__num')]"
+ORDER_BUTTON = "//button[text()='Оформить заказ']"
 
 # Локаторы для ленты заказов
 ORDER_IN_FEED = "//a[starts-with(@href, '/feed/')]"
@@ -24,6 +27,8 @@ MODAL_ORDER = "//div[contains(@class, 'Modal_orderBox')]"
 ORDER_MODAL_CLOSE = "//div[contains(@class, 'Modal_modal')]//button[@type='button']"
 TOTAL_COUNTER = "//p[text()='Выполнено за все время:']/following-sibling::p"
 TODAY_COUNTER = "//p[text()='Выполнено за сегодня:']/following-sibling::p"
+WORK_ORDERS_LIST = "//ul[contains(@class, 'OrderFeed_orderList')][1]/li"
+USER_ORDERS = "//p[contains(@class, 'text_type_digits-default') and starts-with(text(), '#')]"
 
 # Общие локаторы (шапка, модальные окна)
 HEADER_ACCOUNT_LINK = "//a[contains(., 'Личный Кабинет')]"

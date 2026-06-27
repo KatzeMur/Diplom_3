@@ -29,6 +29,9 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
+    def find_elements(self, locator):
+        return self.driver.find_elements(*locator)
+
     def click_element(self, locator):
         element = self.find_element(locator)
         self.driver.execute_script("arguments[0].click();", element)
@@ -67,4 +70,22 @@ class BasePage:
 
     def execute_script(self, script, *args):
         return self.driver.execute_script(script, *args)
+
+    def wait_for_url_contains(self, url_part, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.url_contains(url_part)
+        )
+
+    def wait_for_element_visible(self, locator, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.visibility_of_element_located(locator)
+        )
+
+    def wait_for_element_invisible(self, locator, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )
+
+    def get_current_url(self):
+        return self.driver.current_url
     

@@ -1,13 +1,12 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import (
     RECOVERY_LINK,
     EMAIL_INPUT,
     RECOVERY_BUTTON,
     PASSWORD_TOGGLE_BUTTON,
     PASSWORD_INPUT,
-    LOGIN_BUTTON
+    LOGIN_BUTTON,
+    BURGER_CONSTRUCTOR
 )
 from pages.base_page import BasePage
 
@@ -21,6 +20,9 @@ class LoginPage(BasePage):
     def click_recovery_link(self):
         self.click_element((By.XPATH, RECOVERY_LINK))
 
+    def is_recovery_link_displayed(self):
+        return self.is_element_displayed((By.XPATH, RECOVERY_LINK))
+
     def enter_email(self, email):
         self.enter_text((By.XPATH, EMAIL_INPUT), email)
 
@@ -30,13 +32,13 @@ class LoginPage(BasePage):
     def click_password_toggle(self):
         self.click_element((By.XPATH, PASSWORD_TOGGLE_BUTTON))
 
+    def is_password_toggle_displayed(self):
+        return self.is_element_displayed((By.XPATH, PASSWORD_TOGGLE_BUTTON))
+
     def enter_password(self, password):
         self.enter_text((By.XPATH, PASSWORD_INPUT), password)
 
     def click_login(self):
         self.click_element((By.XPATH, LOGIN_BUTTON))
-        # Ждем появления маркера успешного входа (конструктора)
-        WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[contains(@class, 'BurgerConstructor')]"))
-        )
+        self.wait_for_element_visible((By.XPATH, BURGER_CONSTRUCTOR))
         

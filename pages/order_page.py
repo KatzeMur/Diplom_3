@@ -4,7 +4,9 @@ from locators.locators import (
     MODAL_ORDER, 
     ORDER_MODAL_CLOSE, 
     TOTAL_COUNTER, 
-    TODAY_COUNTER
+    TODAY_COUNTER,
+    WORK_ORDERS_LIST,
+    USER_ORDERS
 )
 from pages.base_page import BasePage
 
@@ -35,8 +37,8 @@ class OrderPage(BasePage):
         return self.get_text((By.XPATH, TODAY_COUNTER))
 
     def get_work_orders_count(self):
-        return len(self.driver.find_elements(By.XPATH, "//ul[contains(@class, 'OrderFeed_orderList')][1]/li"))
+        return len(self.find_elements((By.XPATH, WORK_ORDERS_LIST)))
 
     def get_user_orders_count(self):
-        return len(self.driver.find_elements(By.XPATH, "//p[contains(@class, 'text_type_digits-default') and starts-with(text(), '#')]"))
+        return len(self.find_elements((By.XPATH, USER_ORDERS)))
     

@@ -15,7 +15,7 @@ class TestAccount:
         account_page = AccountPage(driver)
         account_page.click_account_link()
 
-        assert "/account" in driver.current_url
+        assert account_page.is_on_account_page() is True
 
     def test_click_order_history(self, driver):
         login_page = LoginPage(driver)
@@ -28,7 +28,7 @@ class TestAccount:
         account_page.click_account_link()
         account_page.click_order_history()
 
-        assert "/account/order-history" in driver.current_url
+        assert account_page.is_on_order_history_page() is True
 
     def test_logout(self, driver):
         login_page = LoginPage(driver)
@@ -41,5 +41,5 @@ class TestAccount:
         account_page.click_account_link()
         account_page.click_logout()
 
-        assert "/login" in driver.current_url
+        assert account_page.is_on_login_page() is True
         
